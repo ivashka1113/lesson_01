@@ -1,15 +1,9 @@
-let title = "Lesson_2";
-let screens = "Простые, Сложные, Интерактивные";
-let screenPrice = 12000;
 let rollback = 24;
-let fullPrice = 25000;
-let adaptive = false;
 
-
-title = prompt("Как называется ваш проект?", "АвтоЛидер");
-screens = prompt("Какие типы экранов нужно разработать?", 'Простые, Сложные, Интерактивные');
-screenPrice = +prompt("Сколько будет стоить данная работа?", 12000);
-adaptive = confirm("Нужен ли адаптив на сайте? (Ок - да, отмена - нет)");
+let title = prompt("Как называется ваш проект?", "АвтоЛидер");
+let screens = prompt("Какие типы экранов нужно разработать?", 'Простые, Сложные, Интерактивные');
+let screenPrice = +prompt("Сколько будет стоить данная работа?", 12000);
+let adaptive = confirm("Нужен ли адаптив на сайте? (Ок - да, отмена - нет)");
 
 
 let service1 = prompt("Какой дополнительный тип услуги нужен?", "SEO продвижение");
@@ -17,7 +11,7 @@ let servicePrice1 = +prompt("Сколько это будет стоить?", 60
 let service2 = prompt("Какой дополнительный тип услуги нужен?", "SEO продвижениеу");
 let servicePrice2 = +prompt("Сколько это будет стоить?", 6000);
 
-fullPrice = screenPrice + servicePrice1 + servicePrice2;
+let fullPrice = screenPrice + servicePrice1 + servicePrice2;
 
 let servicePercentPrice = fullPrice - fullPrice * (rollback / 100);
 
@@ -33,15 +27,15 @@ switch (true) {
         console.log("Даём скидку в 10%");
         break;
 
-    case fullPrice > 1500 && fullPrice < 3000:
+    case fullPrice >= 1500:
         console.log("Даём скидку в 5%");
         break;
 
-    case fullPrice <= 1500 && fullPrice > 0:
+    case fullPrice > 0:
         console.log("Скидка не предусмотрена");
         break;
 
-    case fullPrice <= 0:
+    default:
         console.log("Something wrong");
         break;
 }
