@@ -13,32 +13,23 @@ let servicePrice2 = +prompt("Сколько это будет стоить?", 60
 let fullPrice = screenPrice + servicePrice1 + servicePrice2;
 let servicePercentPrice = fullPrice - fullPrice * (rollback / 100);
 
+switch (true) {
+    case fullPrice >= 3000:
+        console.log("Даём скидку в 10%");
+        break;
 
-const showTypeOf = function (variable) {
-    console.log(variable, typeof variable);
+    case fullPrice >= 1500:
+        console.log("Даём скидку в 5%");
+        break;
+
+    case fullPrice > 0:
+        console.log("Скидка не предусмотрена");
+        break;
+
+    default:
+        console.log("Something wrong");
+        break;
 }
-
-const getRollbackMessage = function (price) {
-    switch (true) {
-        case price >= 3000:
-            return "Даём скидку 10%";
-
-        case price >= 1500:
-            return "Даём скидку 5%";
-
-        case price > 0:
-            return "Скидка не предусмотрена";
-
-        default:
-            return "Something wrong";
-    }
-}
-
-
-showTypeOf(title);
-showTypeOf(fullPrice);
-showTypeOf(adaptive);
-
 
 console.log(" Тип данных переменной title: " + typeof title + "\n", "Тип данных переменной fullPrice: " + typeof fullPrice + "\n", "Тип данных переменной adaptive: " + typeof adaptive);
 console.log(" Длина строки из переменной screens: " + screens.length);
@@ -46,4 +37,3 @@ console.log(" Стоимость верстки экранов: " + screenPrice 
 console.log((screens.toLowerCase()).split(", "));
 console.log("Процент отката посреднику за работу: " + fullPrice * (rollback / 100) + " рублей");
 console.log("Итоговая стоимость за вычетом отката посреднику: " + Math.ceil(servicePercentPrice) + " рублей");
-console.log(getRollbackMessage(fullPrice));
