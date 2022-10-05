@@ -14,13 +14,15 @@ let adaptive;
 let rollback = 24;
 
 
+const hasWhiteSpace = function (s) {
+    return /\s/g.test(s);
+}
+
 const isNumber = function (num) {
     return !isNaN(parseFloat(num) && isFinite(num));
 }
 
-const removeSpaces = function (num) {
-    return +num.replace(/\s/g, '');
-}
+
 
 const asking = function () {
     title = prompt("Как называется ваш проект?", " авто Лидер");
@@ -28,8 +30,8 @@ const asking = function () {
 
     do {
         screenPrice = prompt("Сколько будет стоить данная работа?", 12000);
-    } while (!isNumber(screenPrice));
-    screenPrice = removeSpaces(screenPrice);
+    } while (!isNumber(screenPrice) || hasWhiteSpace(screenPrice));
+    screenPrice = +screenPrice;
     adaptive = confirm("Нужен ли адаптив на сайте? (Ок - да, отмена - нет)");
 }
 
@@ -70,8 +72,8 @@ const getAllServicePrices = function () {
         do {
             servicePrice = prompt("Сколько это будет стоить?", 6000);
         }
-        while (!isNumber(servicePrice));
-        servicePrice = removeSpaces(servicePrice);
+        while (!isNumber(servicePrice) || hasWhiteSpace(servicePrice));
+        servicePrice = +servicePrice;
         console.log(servicePrice);
         sum += servicePrice;
     }
