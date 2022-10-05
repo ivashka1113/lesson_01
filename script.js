@@ -21,13 +21,11 @@ const isNumber = function (num) {
 const asking = function () {
     title = prompt("Как называется ваш проект?", " авто Лидер");
     screens = prompt("Какие типы экранов нужно разработать?", 'Простые, Сложные, Интерактивные');
-    screenPrice = prompt("Сколько будет стоить данная работа?", 12000);
 
-    while (!isNumber(screenPrice)) {
-        alert("Вы ввели не число");
+    do {
         screenPrice = prompt("Сколько будет стоить данная работа?", 12000);
-    }
-
+    } while (!isNumber(screenPrice));
+    screenPrice = +screenPrice;
     adaptive = confirm("Нужен ли адаптив на сайте? (Ок - да, отмена - нет)");
 }
 
@@ -52,21 +50,31 @@ const getRollbackMessage = function (price) {
 }
 
 const getAllServicePrices = function () {
+
     let sum = 0;
+    let servicePrice;
+
     for (let i = 0; i < 2; i++) {
+
         if (i === 0) {
-            service1 = prompt("Какой дополнительный тип услуги нужен?", "SEO продвижениеу");
+            service1 = prompt("Какой дополнительный тип услуги нужен?", "SEO продвижение");
         }
         if (i === 1) {
-            service2 = prompt("Какой дополнительный тип услуги нужен?", "SEO продвижениеу");
+            service2 = prompt("Какой дополнительный тип услуги нужен?", "SEO продвижение");
         }
-        sum += +prompt("Сколько это будет стоить?", 6000);
+
+        do {
+            servicePrice = prompt("Сколько это будет стоить?", 6000);
+        }
+        while (!isNumber(servicePrice));
+        sum += +servicePrice;
     }
+
     return sum;
 }
 
 function getFullPrice(price, servPrices) {
-    return +price + +servPrices;
+    return price + servPrices;
 }
 
 const getTitle = function (name) {
@@ -92,6 +100,12 @@ servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
 showTypeOf(title);
 showTypeOf(fullPrice);
 showTypeOf(adaptive);
+showTypeOf(service1);
+showTypeOf(service2);
+showTypeOf(allServicePrices);
+showTypeOf(servicePercentPrice);
+showTypeOf(screens);
+showTypeOf(screenPrice);
 
 console.log("allServicePrices", allServicePrices);
 
