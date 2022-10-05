@@ -18,6 +18,10 @@ const isNumber = function (num) {
     return !isNaN(parseFloat(num) && isFinite(num));
 }
 
+const removeSpaces = function (num) {
+    return +num.replace(/\s/g, '');
+}
+
 const asking = function () {
     title = prompt("Как называется ваш проект?", " авто Лидер");
     screens = prompt("Какие типы экранов нужно разработать?", 'Простые, Сложные, Интерактивные');
@@ -25,7 +29,7 @@ const asking = function () {
     do {
         screenPrice = prompt("Сколько будет стоить данная работа?", 12000);
     } while (!isNumber(screenPrice));
-    screenPrice = +screenPrice;
+    screenPrice = removeSpaces(screenPrice);
     adaptive = confirm("Нужен ли адаптив на сайте? (Ок - да, отмена - нет)");
 }
 
@@ -67,7 +71,9 @@ const getAllServicePrices = function () {
             servicePrice = prompt("Сколько это будет стоить?", 6000);
         }
         while (!isNumber(servicePrice));
-        sum += +servicePrice;
+        servicePrice = removeSpaces(servicePrice);
+        console.log(servicePrice);
+        sum += servicePrice;
     }
 
     return sum;
