@@ -43,7 +43,7 @@ function getFullPrice(price, servPrices) {
 const getTitle = function (name) {
     let nameTrans = name
         .trim()
-        .split(' ')
+        .split(/\s+/)
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
     return nameTrans;
