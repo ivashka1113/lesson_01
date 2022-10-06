@@ -98,19 +98,11 @@ fullPrice = getFullPrice(screenPrice, allServicePrices);
 title = getTitle(title);
 servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
 
-
 showTypeOf(title);
 showTypeOf(fullPrice);
 showTypeOf(adaptive);
-showTypeOf(service1);
-showTypeOf(service2);
-showTypeOf(allServicePrices);
-showTypeOf(servicePercentPrice);
-showTypeOf(screens);
-showTypeOf(screenPrice);
 
 console.log("allServicePrices", allServicePrices);
-
 console.log((screens.toLowerCase()).split(", "));
 console.log(getRollbackMessage(fullPrice));
 console.log("Итоговая стоимость за вычетом отката посреднику: " + Math.ceil(servicePercentPrice) + " рублей");
