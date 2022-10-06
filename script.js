@@ -15,7 +15,7 @@ let rollback = 24;
 
 
 const isNumber = function (num) {
-    return !isNaN(parseFloat(num) && isFinite(num)) && !/\s/g.test(num);
+    return !isNaN(parseFloat(num)) && isFinite(num) && !/\s/g.test(num);
 }
 
 const asking = function () {
