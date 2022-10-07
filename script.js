@@ -84,16 +84,28 @@ const appData = {
 
     getServicePercentPrices: function (price, roll) {
         return price - price * (roll / 100);
+    },
+
+    logger: function (obj) {
+        for (let key in obj) {
+            console.log("Свойство/метод: " + key);
+        }
+    },
+
+    start: function () {
+        appData.asking();
+        appData.allServicePrices = appData.getAllServicePrices();
+        appData.fullPrice = appData.getFullPrice(appData.screenPrice, appData.allServicePrices);
+        appData.title = appData.getTitle(appData.title);
+        appData.servicePercentPrice = appData.getServicePercentPrices(appData.fullPrice, appData.rollback);
+        appData.logger(appData);
     }
 
 }
 
 
-appData.asking();
-appData.allServicePrices = appData.getAllServicePrices();
-appData.fullPrice = appData.getFullPrice(appData.screenPrice, appData.allServicePrices);
-appData.title = appData.getTitle(appData.title);
-appData.servicePercentPrice = appData.getServicePercentPrices(appData.fullPrice, appData.rollback);
+appData.start();
 
-console.log(appData.servicePercentPrice);
-console.log(appData.fullPrice);
+
+// console.log(appData.servicePercentPrice);
+// console.log(appData.fullPrice);
