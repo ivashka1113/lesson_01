@@ -61,10 +61,10 @@ const appData = {
     },
 
     addPrices: function () {
-        appData.screenPrice = appData.screens.reduce(function (sum, screens) {
-            return sum += +screens.price;
-        }, 0);
 
+        appData.screenPrice = appData.screens.reduce(function (sum, screen) {
+            return sum += +screen.price;
+        }, 0);
 
         for (let key in appData.services) {
             appData.allServicePrices += appData.services[key];
@@ -132,4 +132,3 @@ appData.start();
 console.log(appData.servicePercentPrice);
 console.log(appData.screens);
 console.log(appData.services);
-console.log(appData.screenPrice);
