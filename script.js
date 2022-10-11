@@ -54,17 +54,14 @@ const appData = {
 
             name = name + "_";
 
-            switch (true) {
-                case (i.toString().length === 1):
-                    name = name + "00" + i;
-                    break;
-                case (i.toString().length === 2):
-                    name = name + "0" + i;
-                    break;
-                default:
-                    name = name + i;
-                    break;
+            if (i.toString().length === 1) {
+                name = name + "00" + i;
+            } else if (i.toString().length === 2) {
+                name = name + "0" + i;
+            } else {
+                name = name + i;
             }
+
             appData.services[name] = +servicePrice;
         }
 
