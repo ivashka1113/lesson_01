@@ -15,7 +15,7 @@ const appData = {
     asking: function () {
         do {
             appData.title = prompt("Как называется ваш проект?", " авто Лидер");
-        } while (appData.isNumber(+appData.title.replace(/ /g, '')));
+        } while (appData.isNumber(appData.title));
         appData.adaptive = confirm("Нужен ли адаптив на сайте? (Ок - да, отмена - нет)");
 
         for (let i = 0; i < 2; i++) {
@@ -25,7 +25,7 @@ const appData = {
 
             do {
                 name = prompt("Какие типы экранов нужно разработать?", 'Простые, Сложные, Интерактивные');
-            } while (appData.isNumber(+name.replace(/ /g, '')));
+            } while (appData.isNumber(name));
 
 
             do {
@@ -46,14 +46,24 @@ const appData = {
             let name;
             do {
                 name = prompt("Какой дополнительный тип услуги нужен?", "SEO продвижение");
-            } while (appData.isNumber(+name.replace(/ /g, '')));
+            } while (appData.isNumber(name));
 
             do {
                 servicePrice = prompt("Сколько это будет стоить?", 6000);
             } while (!appData.isNumber(servicePrice));
 
-            for (let key in appData.services) {
-                if (name === key) name = name + "_" + i;
+            name = name + "_";
+
+            switch (true) {
+                case (i.toString().length === 1):
+                    name = name + "00" + i;
+                    break;
+                case (i.toString().length === 2):
+                    name = name + "0" + i;
+                    break;
+                default:
+                    name = name + i;
+                    break;
             }
             appData.services[name] = +servicePrice;
         }
