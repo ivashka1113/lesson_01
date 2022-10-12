@@ -1,6 +1,5 @@
 "use strict";
 
-
 const titleProject = document.getElementsByTagName("h1")[0];
 const buttonResult = document.getElementsByClassName("handler_btn")[0];
 const buttonReset = document.getElementsByClassName("handler_btn")[1];
