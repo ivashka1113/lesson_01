@@ -28,18 +28,19 @@ const appData = {
     screenPrice: 0,
     adaptive: true,
     rollback: 24,
+
     init: function () {
         appData.addTitle();
         startBtn.addEventListener('click', appData.start);
         buttonPluse.addEventListener('click', appData.addScreenBlock);
     },
+
     start: function () {
         appData.addScreens();
         appData.addServices();
         appData.addPrices();
 
         // appData.getServicePercentPrices(appData.fullPrice, appData.rollback);
-
         // appData.logger(appData);
 
         appData.showResult();
@@ -49,14 +50,17 @@ const appData = {
         total.value = appData.screenPrice;
         totalCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber;
         totalFullCount.value = appData.fullPrice;
-
     },
+
     addTitle: function () {
         document.title = title.textContent;
     },
+
     addScreens: function () {
         const screens = document.querySelectorAll("div.screen");
+
         screens.forEach(function (screen, index) {
+
             const select = screen.querySelector("select");
             const input = screen.querySelector("input");
             const selectName = select.options[select.selectedIndex].textContent;
@@ -66,15 +70,17 @@ const appData = {
                 name: selectName,
                 price: +select.value * +input.value
             });
-
         });
     },
+
     addScreenBlock: function () {
         const screens = document.querySelectorAll("div.screen");
         const cloneScreen = screens[0].cloneNode(true);
+
         screens[screens.length - 1].after(cloneScreen);
     },
     addServices: function () {
+
         otherItemsPercent.forEach(function (item) {
             const check = item.querySelector("input[type=checkbox]");
             const label = item.querySelector("label");
@@ -93,7 +99,6 @@ const appData = {
     },
 
     addPrices: function () {
-
         appData.screenPrice = appData.screens.reduce(function (sum, screen) {
             return sum += +screen.price;
         }, 0);
@@ -134,12 +139,7 @@ const appData = {
             console.log("Свойство/метод: " + key);
         }
     }
-
-}
+};
 
 
 appData.init();
-
-console.log(appData.servicePercentPrice);
-// console.log(appData.screens);
-console.log(appData.services);
