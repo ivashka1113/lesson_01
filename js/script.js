@@ -14,6 +14,7 @@ const totalCountOther = document.getElementsByClassName('total-input')[2];
 const totalFullCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
 const screens = document.querySelectorAll("div.screen");
+let flag = false;
 
 
 
@@ -50,6 +51,7 @@ const appData = {
     },
 
     start: function () {
+        flag = true;
         appData.newCalc();
         appData.addScreens();
         appData.addServices();
@@ -77,6 +79,7 @@ const appData = {
     spanChange: function () {
         spanRange.textContent = `${inputRange.value}%`;
         appData.rollback = +inputRange.value;
+        if (flag === true) appData.start();
         console.log(appData.rollback);
     },
 
