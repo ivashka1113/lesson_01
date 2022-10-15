@@ -13,9 +13,8 @@ const totalCount = document.getElementsByClassName('total-input')[1];
 const totalCountOther = document.getElementsByClassName('total-input')[2];
 const totalFullCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
-const screens = document.querySelectorAll(".screen");
-let flag = false;
-
+let screens = document.querySelectorAll(".screen");
+let inputRangeFlag = true;
 
 
 const appData = {
@@ -48,15 +47,16 @@ const appData = {
         inputRange.addEventListener('input', appData.spanChange);
         startBtn.addEventListener('click', appData.start);
         buttonPluse.addEventListener('click', appData.addScreenBlock);
+        resetBtn.addEventListener('click', appData.newCalc());
     },
 
     start: function () {
-        flag = true;
-        appData.newCalc();
         if (!appData.addScreens()) {
             appData.showResult();
+            inputRangeFlag = false;
             return;
         };
+        inputRangeFlag = true;
         appData.addServices();
         appData.addPrices();
 
@@ -81,16 +81,14 @@ const appData = {
 
     spanChange: function () {
         spanRange.textContent = `${inputRange.value}%`;
-        appData.rollback = +inputRange.value;
-        if (flag === true) {
+        if (inputRangeFlag === true) {
+            appData.rollback = +inputRange.value;
             appData.servicePercentPrice = appData.fullPrice - Math.ceil((appData.fullPrice * (appData.rollback / 100)));
             appData.showResult();
         }
     },
 
     addScreens: function () {
-        const screens = document.querySelectorAll(".screen");
-
         screens.forEach(function (screen, index) {
 
             const select = screen.querySelector("select");
@@ -123,10 +121,11 @@ const appData = {
     },
 
     addScreenBlock: function () {
-        const screens = document.querySelectorAll(".screen");
         const cloneScreen = screens[0].cloneNode(true);
         cloneScreen.childNodes[3].childNodes[1].value = "";
         screens[screens.length - 1].after(cloneScreen);
+        screens = document.querySelectorAll(".screen");
+        console.log(screens);
     },
 
     addServices: function () {
