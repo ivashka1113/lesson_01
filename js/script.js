@@ -20,7 +20,7 @@ const cmsCheckbox = document.getElementById("cms-open");
 const cmsSelect = document.getElementById("cms-select");
 const cmsVariants = document.querySelector(".hidden-cms-variants");
 const cmsOther = document.querySelector(".hidden-cms-variants .main-controls__input");
-let cmsPercentPrice;
+let cmsPercentPrice = 0;
 const cmsInput = document.getElementById("cms-other-input");
 
 console.log(cmsCheckbox);
@@ -53,17 +53,22 @@ const appData = {
         inputRange.value = 0;
         cmsPercentPrice = 0;
         spanRange.textContent = `${inputRange.value}%`;
-        for (let index = 0; index < screens.length - 1; index++) {
+
+        for (let index = 1; index < screens.length; index++) {
             screens[index].remove();
-            screens = document.querySelectorAll('.screen');
         }
+        screens = document.querySelectorAll('.screen');
+
         checkbox.forEach((item) => {
             item.checked = false;
         });
+
+        cmsInput.value = "";
+
         screens[0].childNodes[3].childNodes[1].value = "";
         screens[0].childNodes[1].childNodes[1].childNodes[1].selected = true;
+        cmsSelect.querySelectorAll('option')[0].selected = true;
         console.log(screens);
-        // screens[0].getElementByClassName("main-controls__select").querySelector("option").selected = true;
     },
 
     init: function () {
@@ -74,7 +79,8 @@ const appData = {
         resetBtn.addEventListener('click', appData.reset);
         cmsCheckbox.addEventListener('change', appData.cmsSwitch);
         cmsSelect.addEventListener('change', appData.cmsChange);
-        cmsInput.addEventListener('input', this.cmsPrice);
+        cmsSelect.addEventListener('change', appData.cmsSelectPrice);
+        cmsInput.addEventListener('input', this.cmsPriceOther);
     },
 
     start: function () {
@@ -83,12 +89,15 @@ const appData = {
             inputRangeFlag = false;
             return;
         };
+
+        if (cmsInput.value === "" && cmsSelect.querySelector("option[value=other]").selected || cmsSelect.querySelector("option[value='']").selected) {
+            alert("Вы внесли не все данные");
+            return;
+        };
         inputRangeFlag = true;
         appData.addServices();
         appData.addPrices();
 
-        // appData.getServicePercentPrices(appData.fullPrice, appData.rollback);
-        // appData.logger(appData);
 
         appData.showResult();
         appData.inputBlocked();
@@ -104,6 +113,14 @@ const appData = {
             select.disabled = !select.disabled;
         })
         buttonPluse.disabled = !buttonPluse.disabled;
+
+        checkbox.forEach((item) => {
+            item.disabled = !item.disabled;
+        });
+
+        cmsSelect.disabled = !cmsSelect.disabled;
+
+        cmsInput.disabled = !cmsInput.disabled;
     },
 
     buttonSwitch: function () {
@@ -118,22 +135,15 @@ const appData = {
 
     cmsChange: function () {
         cmsSelect.querySelector("option[value=other]").selected ? cmsOther.style.display = "flex" : cmsOther.style.display = "none";
-
     },
 
-    cmsPrice: function () {
-        switch (true) {
-            case cmsSelect.querySelector("option[value=other]").selected:
-                cmsPercentPrice = cmsInput.value;
-                console.log(cmsPercentPrice);
-                return
-            case cmsSelect.querySelector("option[value='50']").selected:
-                console.log(cmsPercentPrice);
-                return cmsPercentPrice = 50;
-            default:
-                console.log(cmsPercentPrice);
-                return cmsPercentPrice = 1;
-        }
+    cmsPriceOther: function () {
+        cmsPercentPrice = cmsInput.value;
+        console.log(cmsInput.value);
+    },
+
+    cmsSelectPrice: function () {
+        cmsSelect.querySelector("option[value='50']").selected ? cmsPercentPrice = 50 : cmsPercentPrice = 0;
     },
 
     reset: function () {
@@ -169,6 +179,7 @@ const appData = {
     },
 
     addScreens: function () {
+        this.screens.length = 0;
         screens.forEach((screen, index) => {
 
             const select = screen.querySelector("select");
@@ -195,6 +206,7 @@ const appData = {
                 return selectName === "Тип экранов" || input.value === "";
             })) {
             alert("Вы не ввели данные");
+            this.screens.length = 0;
             return false;
         }
         return true;
@@ -241,7 +253,7 @@ const appData = {
 
         this.fullPrice = +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
 
-        this.fullPrice = this.fullPrice + (this.fullPrice / 100 * cmsPercentPrice);
+        this.fullPrice = this.fullPrice + (this.fullPrice * cmsPercentPrice / 100);
 
         this.servicePercentPrice = this.fullPrice - Math.ceil((this.fullPrice * (this.rollback / 100)));
 
