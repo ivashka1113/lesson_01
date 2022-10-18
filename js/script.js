@@ -16,6 +16,15 @@ const totalCountRollback = document.getElementsByClassName('total-input')[4];
 let screens = document.querySelectorAll(".screen");
 let inputRangeFlag = true;
 const checkbox = document.querySelectorAll('.custom-checkbox');
+const cmsCheckbox = document.getElementById("cms-open");
+const cmsSelect = document.getElementById("cms-select");
+const cmsVariants = document.querySelector(".hidden-cms-variants");
+const cmsOther = document.querySelector(".hidden-cms-variants .main-controls__input");
+let cmsPercentPrice;
+const cmsInput = document.getElementById("cms-other-input");
+
+console.log(cmsCheckbox);
+console.log(cmsVariants);
 
 
 const appData = {
@@ -42,6 +51,7 @@ const appData = {
         this.screens = [];
         this.screenCount = 0;
         inputRange.value = 0;
+        cmsPercentPrice = 0;
         spanRange.textContent = `${inputRange.value}%`;
         for (let index = 0; index < screens.length - 1; index++) {
             screens[index].remove();
@@ -62,6 +72,9 @@ const appData = {
         startBtn.addEventListener('click', appData.start);
         buttonPluse.addEventListener('click', appData.addScreenBlock);
         resetBtn.addEventListener('click', appData.reset);
+        cmsCheckbox.addEventListener('change', appData.cmsSwitch);
+        cmsSelect.addEventListener('change', appData.cmsChange);
+        cmsInput.addEventListener('input', this.cmsPrice);
     },
 
     start: function () {
@@ -98,7 +111,34 @@ const appData = {
         resetBtn.style.display === "none" ? resetBtn.style.display = "block" : resetBtn.style.display = "none";
     },
 
+    cmsSwitch: function () {
+        console.log("Событие");
+        cmsVariants.style.display === "none" ? cmsVariants.style.display = "flex" : cmsVariants.style.display = "none";
+    },
+
+    cmsChange: function () {
+        cmsSelect.querySelector("option[value=other]").selected ? cmsOther.style.display = "flex" : cmsOther.style.display = "none";
+
+    },
+
+    cmsPrice: function () {
+        switch (true) {
+            case cmsSelect.querySelector("option[value=other]").selected:
+                cmsPercentPrice = cmsInput.value;
+                console.log(cmsPercentPrice);
+                return
+            case cmsSelect.querySelector("option[value='50']").selected:
+                console.log(cmsPercentPrice);
+                return cmsPercentPrice = 50;
+            default:
+                console.log(cmsPercentPrice);
+                return cmsPercentPrice = 1;
+        }
+    },
+
     reset: function () {
+        cmsOther.style.display = "none";
+        cmsVariants.style.display = "none";
         appData.newCalc();
         appData.inputBlocked();
         appData.buttonSwitch();
@@ -200,6 +240,8 @@ const appData = {
         }
 
         this.fullPrice = +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
+
+        this.fullPrice = this.fullPrice + (this.fullPrice / 100 * cmsPercentPrice);
 
         this.servicePercentPrice = this.fullPrice - Math.ceil((this.fullPrice * (this.rollback / 100)));
 
