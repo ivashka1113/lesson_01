@@ -41,7 +41,6 @@ const appData = {
     screenCount: 0,
 
     newCalc: function () {
-        this.rollback = 0;
         this.servicePercentPrice = 0;
         this.screenPrice = 0;
         this.fullPrice = 0;
@@ -52,6 +51,7 @@ const appData = {
         this.screens = [];
         this.screenCount = 0;
         inputRange.value = 0;
+        this.rollback = 0;
         cmsPercentPrice = 0;
         spanRange.textContent = `${inputRange.value}%`;
 
