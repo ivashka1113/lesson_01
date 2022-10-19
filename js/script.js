@@ -41,6 +41,7 @@ const appData = {
     screenCount: 0,
 
     newCalc: function () {
+        this.rollback = 0;
         this.servicePercentPrice = 0;
         this.screenPrice = 0;
         this.fullPrice = 0;
