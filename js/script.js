@@ -90,7 +90,7 @@ const appData = {
             return;
         };
 
-        if (cmsInput.value === "" && cmsSelect.querySelector("option[value=other]").selected || cmsSelect.querySelector("option[value='']").selected) {
+        if ((cmsInput.value === "" && cmsSelect.querySelector("option[value=other]").selected) || (cmsSelect.querySelector("option[value='']").selected && cmsCheckbox.checked)) {
             alert("Вы внесли не все данные");
             return;
         };
@@ -129,7 +129,6 @@ const appData = {
     },
 
     cmsSwitch: function () {
-        console.log("Событие");
         cmsVariants.style.display === "none" ? cmsVariants.style.display = "flex" : cmsVariants.style.display = "none";
     },
 
@@ -139,7 +138,6 @@ const appData = {
 
     cmsPriceOther: function () {
         cmsPercentPrice = cmsInput.value;
-        console.log(cmsInput.value);
     },
 
     cmsSelectPrice: function () {
